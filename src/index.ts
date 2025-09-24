@@ -1,4 +1,4 @@
-import { starterPlugin } from './plugin.ts';
+import { falAIPlugin } from './plugin.ts';
 
-export { starterPlugin, StarterService } from './plugin.ts';
-export default starterPlugin;
+export { falAIPlugin, FalAIService } from './plugin.ts';
+export default falAIPlugin;

@@ -142,27 +142,27 @@ const quickProvider: Provider = {
   },
 };
 
-export class StarterService extends Service {
-  static override serviceType = 'starter';
+export class FalAIService extends Service {
+  static override serviceType = 'fal-ai-service';
 
   override capabilityDescription =
-    'This is a starter service which is attached to the agent through the starter plugin.';
+    'This is a fal-ai service which is attached to the agent through the fal-ai plugin.';
 
   constructor(runtime: IAgentRuntime) {
     super(runtime);
   }
 
   static override async start(runtime: IAgentRuntime): Promise<Service> {
-    logger.info('Starting starter service');
-    const service = new StarterService(runtime);
+    logger.info('Starting fal-ai service');
+    const service = new FalAIService(runtime);
     return service;
   }
 
   static override async stop(runtime: IAgentRuntime): Promise<void> {
-    logger.info('Stopping starter service');
-    const service = runtime.getService(StarterService.serviceType);
+    logger.info('Stopping fal-ai service');
+    const service = runtime.getService(FalAIService.serviceType);
     if (!service) {
-      throw new Error('Starter service not found');
+      throw new Error('FalAI service not found');
     }
     if ('stop' in service && typeof service.stop === 'function') {
       await service.stop();
@@ -170,15 +170,16 @@ export class StarterService extends Service {
   }
 
   override async stop(): Promise<void> {
-    logger.info('Starter service stopped');
+    logger.info('FalAI service stopped');
   }
 }
 
-export const starterPlugin: Plugin = {
+export const falAIPlugin: Plugin = {
   name: 'plugin-fal-ai',
   description: 'Generate videos using fal.ai MiniMax Hailuo-02', 
   config: {
     EXAMPLE_PLUGIN_VARIABLE: process.env.EXAMPLE_PLUGIN_VARIABLE,
+    FAL_KEY: process.env.FAL_KEY,
   },
   async init(config: Record<string, string>) {
     logger.info('Initializing plugin-fal-ai');
@@ -259,10 +260,10 @@ export const starterPlugin: Plugin = {
       },
     ],
   },
-  services: [StarterService],
+  services: [FalAIService],
   actions: [generateVideoAction],
   providers: [quickProvider],
   // dependencies: ['@elizaos/plugin-knowledge'], <--- plugin dependencies go here (if requires another plugin)
 };
 
-export default starterPlugin;
+export default falAIPlugin;
